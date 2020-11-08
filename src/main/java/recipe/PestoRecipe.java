@@ -2,11 +2,12 @@ package recipe;
 
 import com.badlogic.gdx.ai.btree.branch.Parallel;
 import com.badlogic.gdx.ai.btree.branch.Sequence;
-import ingredient.LemonPeel;
-import ingredient.Parmesan;
-import tasks.Grate;
+import config.Constants;
+import ingredient.*;
+import tasks.*;
+import tool.Blender;
 import tool.Grater;
-import tool.Kitchentool;
+import tool.MixingCup;
 
 public class PestoRecipe extends Recipe{
 
@@ -20,16 +21,51 @@ public class PestoRecipe extends Recipe{
     @Override
     public void init() {
         populateMaps();
-        Parallel<Recipe> prepareTask = new Parallel<>();
-        prepareTask.addChild(new Grate<Recipe>(ingredients.get("Parmesan"), (Grater) tools.get("Grater")));
-        prepareTask.addChild(new Grate<Recipe>(ingredients.get("LemonPeel"), (Grater) tools.get("Grater")));
-        cookingTask.addChild(prepareTask);
+        cookingTask.addChild(buildPrepareSequence());
+        cookingTask.addChild(buildBlendingSequence());
+        cookingTask.addChild(new Season<>(ingredients.get(Constants.SALT), ingredients.get(Constants.PEPPER)));
         instructions.addChild(cookingTask);
     }
 
     private void populateMaps(){
-        tools.put("Grater", new Grater());
-        ingredients.put("Parmesan", new Parmesan());
-        ingredients.put("LemonPeel", new LemonPeel());
+        tools.put(Constants.GRATER, new Grater());
+        tools.put(Constants.MIXING_CUP, new MixingCup());
+        tools.put(Constants.BLENDER, new Blender());
+        ingredients.put(Constants.PARMESAN, new Parmesan());
+        ingredients.put(Constants.LEMON_PEEL, new LemonPeel());
+        ingredients.put(Constants.RAMSONS, new Ramsons());
+        ingredients.put(Constants.PISTACHIO, new Pistachio());
+        ingredients.put(Constants.OLIVE_OIL, new OliveOil());
+        ingredients.put(Constants.SALT, new Salt());
+        ingredients.put(Constants.PEPPER, new Pepper());
+    }
+
+    private Parallel<Recipe> buildPrepareSequence() {
+        Parallel<Recipe> prepareTask = new Parallel<>();
+        prepareTask.addChild(new Grate<Recipe>(ingredients.get(Constants.PARMESAN), (Grater) tools.get(Constants.GRATER)));
+        prepareTask.addChild(new Grate<Recipe>(ingredients.get(Constants.LEMON_PEEL), (Grater) tools.get(Constants.GRATER)));
+        Ingredient ramsons = ingredients.get(Constants.RAMSONS);
+        Sequence<Recipe> ramsonsSequence = new Sequence<>(
+                new Clean<>(ramsons),
+                new Dry<>(ramsons),
+                new Pluck<>(ramsons, 80));
+        prepareTask.addChild(ramsonsSequence);
+        return prepareTask;
+    }
+
+    private Sequence<Recipe> buildBlendingSequence() {
+        return new Sequence<>(
+                new Add<Recipe>((MixingCup) tools.get(Constants.MIXING_CUP),
+                        ingredients.get(Constants.RAMSONS),
+                        ingredients.get(Constants.PARMESAN),
+                        ingredients.get(Constants.LEMON_PEEL),
+                        ingredients.get(Constants.PISTACHIO),
+                        ingredients.get(Constants.OLIVE_OIL)),
+                new Blend<Recipe>((Blender) tools.get(Constants.BLENDER),
+                        ingredients.get(Constants.RAMSONS),
+                        ingredients.get(Constants.PARMESAN),
+                        ingredients.get(Constants.LEMON_PEEL),
+                        ingredients.get(Constants.PISTACHIO),
+                        ingredients.get(Constants.OLIVE_OIL)));
     }
 }
