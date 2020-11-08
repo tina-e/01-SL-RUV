@@ -1,4 +1,4 @@
-package preparation;
+package tasks;
 
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;

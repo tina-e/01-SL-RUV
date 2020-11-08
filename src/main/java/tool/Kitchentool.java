@@ -1,10 +1,10 @@
 package tool;
 
-public class Kitchentool {
+public abstract class Kitchentool {
     protected String name;
 
-    public Kitchentool(){
-
+    public Kitchentool(String n){
+        name = n;
     }
 
     public String getName(){

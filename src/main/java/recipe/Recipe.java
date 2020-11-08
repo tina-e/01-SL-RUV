@@ -2,16 +2,13 @@ package recipe;
 
 import behaviourtree.RecipeTree;
 import ingredient.Ingredient;
-import ingredient.PineNuts;
-import preparation.Roasting;
 import tool.Kitchentool;
-import tool.Pan;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Recipe {
+public abstract class Recipe {
 
     String name;
     HashMap<String, Kitchentool> tools;
@@ -26,11 +23,7 @@ public class Recipe {
         instructions.setObject(this);
     }
 
-    public void init(){
-        Ingredient i = new PineNuts();
-        Kitchentool t = new Pan();
-        instructions.addChild(new Roasting(i,t));
-    }
+    public abstract void init();
 
     public void addIngredient(Ingredient newIngredient){
         ingredients.put(newIngredient.getName(), newIngredient);

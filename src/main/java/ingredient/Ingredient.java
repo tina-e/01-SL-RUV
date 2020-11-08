@@ -1,6 +1,6 @@
 package ingredient;
 
-public class Ingredient {
+public abstract class Ingredient {
     protected String name;
     protected boolean used;
 

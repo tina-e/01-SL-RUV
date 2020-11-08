@@ -1,9 +1,9 @@
-package preparation;
+package tasks;
 
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 
-public class TestTask<Rezept> extends LeafTask<Rezept> {
+public class TestTask<Recipe> extends LeafTask<Recipe> {
 
     private int count = 10;
 
