@@ -1,20 +1,35 @@
-import behaviourtree.RecipeTree;
+import behaviortree.RecipeTree;
+import com.badlogic.gdx.ai.btree.BehaviorTree;
 import com.badlogic.gdx.ai.btree.Task;
-import tasks.Prepare;
-import recipe.PestoRecipe;
-import recipe.Recipe;
+import rezept.ImportiertesRezept;
+import rezept.Rezept;
+
+import java.io.FileNotFoundException;
 
 public class Main {
+    public static void main(String [] args) throws FileNotFoundException {
 
-    public static void main(String[] args) {
-        Recipe myRecipe = new PestoRecipe("Pesto");
-        myRecipe.init();
-        RecipeTree<Recipe> recipeTree = myRecipe.getTree();
+        // Import des Behavior Trees aus .tree Datei (diese Zeilen ausklammern für programmatischen Ansatz):
+        /*ImportiertesRezept myR;
+        myR = new ImportiertesRezept("Pesto");*/
 
-        do{
-            recipeTree.step();
-            System.out.println("tree status: " + recipeTree.getStatus());
+        //Programmatisches Erstellen des Behavior Trees (diese Zeilen ausklammern für Import aus .tree Datei):
+        Rezept myR;
+        myR = new Rezept("Pesto");
+
+        // Ab jetzt ist der Code für beide Ansätze gleich
+        BehaviorTree<RecipeTree> r;
+
+        myR.init();
+
+        r = myR.getTree();
+
+        do {
+            r.step();
+            System.out.println("tree hat Status: " + r.getStatus());
         }
-        while (recipeTree.getStatus() == Task.Status.RUNNING);
+        while (r.getStatus() == Task.Status.RUNNING);
+
+        myR.status();
     }
 }

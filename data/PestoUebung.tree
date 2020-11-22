@@ -1,0 +1,56 @@
+#
+# Pesto Tree
+#
+
+# Arbeitsschritte
+# Pinienkerne in einer Pfanne ohne Fett rösten, dann sofort herausnehmen und auskühlen lassen.
+
+# Basilikum kurz in kaltem Wasser waschen, gut trocken tupfen und Blättchen abzupfen.
+
+# Knoblauch schälen und grob zerkleinern
+
+# Parmesan reiben
+
+# Basilikum, Knoblauch, Pinienkerne, Parmesan und Öl in einen hohen
+# Rührbecher geben und mit einem Pürierstab pürieren
+
+# Mit Salz und Pfeffer abschmecken
+
+# Bisher ausführbarer Behavior Tree:
+
+import roesten:"zubereitung.RoestenText"
+
+sequence
+    roesten zutat:"Pinienkerne" geraet:"Pfanne"
+
+# Unser gemeinsam erarbeiteter Tree für das Pesto Rezept. Die einzelnen Tasks sind noch nicht implementiert.
+# sequence
+#    parallel
+#        sequence
+#            roesten zutat:"Pinienkern" geraet:"Pfanne"
+#            parallel policy:"sequence" orchestrator:"resume"
+#                PinienkerneBraun?
+#                herausnehmen zutat: "Pinienkern"
+#            auskühlenLassen zutat: "Pinienkern"
+#            hinzugeben zutat:"Pinienkern" geraet:"Rührbecher"
+#        RandomSequence
+#            sequence
+#                waschen zutat:"Basilikum"
+#                trocken zutat:"Basilikum"
+#                zupfen zutat:"Basilikum"
+#                hinzugeben zutat:"Basilikum" geraet:"Rührbecher"
+#            sequence
+#                schälen zutat:"Knoblauch"
+#                zerkleinern zutat:"Knoblauch" art:"grob"
+#                hinzugeben zutat:"Knoblauch" geraet:"Rührbecher"
+#            sequence
+#                reiben zutat:"Parmesan"
+#                hinzugeben zutat:"Parmesan" geraet:"Rührbecher"
+#            hinzugeben zutat:"Öl" geraet:"Rührbecher"
+#    puerieren geraet:"Pürierstab"
+#    sequence
+#        invert
+#            SchmecktGut?
+#        abschmecken zutat:"Salz"
+#        abschmecken zutat:"Pfeffer"
+#    servieren
