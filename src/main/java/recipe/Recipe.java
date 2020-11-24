@@ -11,6 +11,7 @@ import java.util.Set;
 public abstract class Recipe {
 
     String name;
+
     HashMap<String, Kitchentool> tools;
     HashMap<String, Ingredient> ingredients;
     RecipeTree instructions;

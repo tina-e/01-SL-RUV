@@ -3,6 +3,7 @@ package tasks;
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 import ingredient.Ingredient;
+import ingredient.Product;
 import tool.MixingCup;
 
 public class Add<Recipe> extends LeafTask<Recipe> {
@@ -13,6 +14,7 @@ public class Add<Recipe> extends LeafTask<Recipe> {
     public Add(MixingCup mixingCup, Ingredient... ingredients) {
         this.ingredients = ingredients;
         this.mixingCup = mixingCup;
+
     }
 
     @Override

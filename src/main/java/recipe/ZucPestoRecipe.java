@@ -9,13 +9,13 @@ import tool.Blender;
 import tool.Grater;
 import tool.MixingCup;
 
-//todo: Mengenangaben s.quantity package
+//todo: an rezept anpassen + mengen nicht vergessen
 
-public class PestoRecipe extends Recipe{
+public class ZucPestoRecipe extends Recipe{
 
     Sequence<Recipe> cookingTask;
 
-    public PestoRecipe(String name) {
+    public ZucPestoRecipe(String name) {
         super(name);
         cookingTask = new Sequence<>();
     }
