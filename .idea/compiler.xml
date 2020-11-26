@@ -7,8 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="02-SL-RUV" />
-        <module name="RUV" />
         <module name="01-SL-RUV" />
+        <module name="RUV" />
       </profile>
     </annotationProcessing>
   </component>
