@@ -1,6 +1,7 @@
 import behaviourtree.RecipeTree;
 import com.badlogic.gdx.ai.btree.Task;
 import recipe.SaladRecipe;
+import recipe.ZucPestoRecipe;
 import tasks.Prepare;
 import recipe.PestoRecipe;
 import recipe.Recipe;
@@ -8,9 +9,9 @@ import recipe.Recipe;
 public class Main {
 
     public static void main(String[] args) {
-        Recipe myRecipe = new PestoRecipe("Pesto");
+        //Recipe myRecipe = new PestoRecipe("Pesto");
         //Recipe myRecipe = new SaladRecipe("Salad");
-        //Recipe myRecipe = new ZucPestoRecipe("Zuchini-Pesto");
+        Recipe myRecipe = new ZucPestoRecipe("Zuchini-Pesto");
 
         myRecipe.init();
         RecipeTree<Recipe> recipeTree = myRecipe.getTree();

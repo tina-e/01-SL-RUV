@@ -25,7 +25,7 @@ public abstract class Recipe {
         ingredients = new HashMap<>();
         instructions = new RecipeTree();
         instructions.setObject(this);
-        product = new Product("Pesto");
+        product = new Product("Pesto"); //TODO has to be assigned in lower class
     }
 
     public abstract void init();

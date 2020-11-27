@@ -12,6 +12,7 @@ public class IsNotFull<Recipe> extends LeafTask<Recipe> {
 
     @Override
     public Status execute() {
+        return Status.SUCCEEDED;
     }
 
     @Override
