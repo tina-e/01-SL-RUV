@@ -8,6 +8,7 @@ import tasks.*;
 import tool.Blender;
 import tool.Grater;
 import tool.MixingCup;
+import tool.Plate;
 
 //todo: an rezept anpassen + mengen nicht vergessen
 
@@ -30,13 +31,14 @@ public class SaladRecipe extends Recipe{
     }
 
     private void populateMaps(){
-        tools.put(Constants.GRATER, new Grater());
-        tools.put(Constants.MIXING_CUP, new MixingCup());
-        tools.put(Constants.BLENDER, new Blender());
-        ingredients.put(Constants.PARMESAN, new Parmesan());
-        ingredients.put(Constants.LEMON_PEEL, new LemonPeel());
-        ingredients.put(Constants.RAMSONS, new Ramsons());
-        ingredients.put(Constants.PISTACHIO, new Pistachio());
+        tools.put(Constants.PLATE, new Plate());
+        ingredients.put(Constants.TOMATO, new Tomato());
+        ingredients.put(Constants.NECTARINE, new Nectarine());
+        ingredients.put(Constants.ROMAINELETTUCE, new RomaineLettuce());
+        ingredients.put(Constants.BASIL, new Basil());
+        ingredients.put(Constants.MOZZARELLA, new Mozzarella());
+        ingredients.put(Constants.PARMA_HAM, new ParmaHam());
+        ingredients.put(Constants.LIGHT_BALSAMICO, new LightBalsamico());
         ingredients.put(Constants.OLIVE_OIL, new OliveOil());
         ingredients.put(Constants.SALT, new Salt());
         ingredients.put(Constants.PEPPER, new Pepper());

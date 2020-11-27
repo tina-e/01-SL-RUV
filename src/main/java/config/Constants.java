@@ -18,11 +18,16 @@ public abstract class Constants {
     public static final String ARUGULA = "Arugula";
     public static final String BASIL = "Basil";
     public static final String LIGHT_BALSAMICO = "LightBalsamico";
-    public static final String MINI_ROCKET_SALAD = "MiniRocketSalad";
+    public static final String ROMAINELETTUCE = "RomaineLettuce";
     public static final String MOZZARELLA = "Mozzarella";
     public static final String NECTARINE = "Nectarine";
     public static final String PARMA_HAM = "ParmaHam";
     public static final String TOMATO = "Tomato";
+    //recipe III
+    public static final String ALMONDS = "Almonds";
+    public static final String PUMPKINSEEDS = "PumpkinSeeds";
+    public static final String GARLICCLOVE = "GarlicClove";
+    public static final String ZUCCHINI = "Zucchini";
 
     /**
      * Tool Strings
@@ -35,4 +40,6 @@ public abstract class Constants {
     public static final String MIXING_CUP = "MixingCup";
     //recipe II
     public static final String PLATE = "Plate";
+    //recipe III
+    public static final String PAN = "Pan";
 }

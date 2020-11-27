@@ -8,6 +8,7 @@ import tasks.*;
 import tool.Blender;
 import tool.Grater;
 import tool.MixingCup;
+import tool.Pan;
 
 //todo: an rezept anpassen + mengen nicht vergessen
 
@@ -30,13 +31,15 @@ public class ZucPestoRecipe extends Recipe{
     }
 
     private void populateMaps(){
-        tools.put(Constants.GRATER, new Grater());
+        tools.put(Constants.PAN, new Pan());
         tools.put(Constants.MIXING_CUP, new MixingCup());
         tools.put(Constants.BLENDER, new Blender());
+        ingredients.put(Constants.ALMONDS, new Almonds());
+        ingredients.put(Constants.PUMPKINSEEDS, new PumpkinSeeds());
+        ingredients.put(Constants.GARLICCLOVE, new GarlicClove());
         ingredients.put(Constants.PARMESAN, new Parmesan());
-        ingredients.put(Constants.LEMON_PEEL, new LemonPeel());
-        ingredients.put(Constants.RAMSONS, new Ramsons());
-        ingredients.put(Constants.PISTACHIO, new Pistachio());
+        ingredients.put(Constants.ZUCCHINI, new Zucchini());
+        ingredients.put(Constants.BASIL, new Basil());
         ingredients.put(Constants.OLIVE_OIL, new OliveOil());
         ingredients.put(Constants.SALT, new Salt());
         ingredients.put(Constants.PEPPER, new Pepper());
