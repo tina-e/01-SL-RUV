@@ -4,28 +4,32 @@ import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 import ingredient.Ingredient;
 import ingredient.Product;
+import quantity.Quantity;
+import tool.Kitchentool;
 import tool.MixingCup;
+
+import javax.tools.Tool;
 
 public class Add<Recipe> extends LeafTask<Recipe> {
 
-    Ingredient[] ingredients;
-    MixingCup mixingCup;
+    Kitchentool tool;
+    Ingredient ingredient;
+    Quantity quantity;
+    Product product;
 
-    public Add(MixingCup mixingCup, Ingredient... ingredients) {
-        this.ingredients = ingredients;
-        this.mixingCup = mixingCup;
-
+    public Add(Kitchentool tool, Ingredient ingredients, Quantity quantity, Product product) {
+        this.ingredient = ingredients;
+        this.tool = tool;
+        this.quantity = quantity;
+        this.product = product;
     }
 
     @Override
     public Status execute() {
-        StringBuilder sb = new StringBuilder("mixing ");
-        for (int i = 0; i < ingredients.length; i++) {
-            sb.append(ingredients[i].getName());
-            if (i < ingredients.length - 1) sb.append(", ");
-        }
-        sb.append(" in " + mixingCup.getName());
-        System.out.println(sb.toString());
+        ingredient.transform("used", true);
+        System.out.println("added " + quantity.toString() + " of " + ingredient.getName() +
+                " to " + product.getName() + " in " + tool.getName());
+        //todo: quantity zu product adden
         return Status.SUCCEEDED;
     }
 

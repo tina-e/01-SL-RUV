@@ -1,26 +1,36 @@
 package ingredient;
 
+import java.util.HashMap;
+
 public abstract class Ingredient {
     protected String name;
-    protected boolean used;
+    protected HashMap<String, Boolean> transformation;
+
+    //todo: evtl used rauslöschen
 
     public Ingredient(){
-        used = false;
+        transformation = new HashMap<String, Boolean>();
+        transformation.put("used", Boolean.FALSE);
     }
     public Ingredient(String n){
-        used = false;
         name = n;
+        transformation = new HashMap<String, Boolean>();
+        transformation.put("used", Boolean.FALSE);
     }
 
     public String getName(){
         return name;
     }
 
-    public boolean isUsed(){
-        return used;
+    public Boolean getTransformation(String action) {
+        return transformation.getOrDefault(action, null);
     }
 
-    public void use(){
-        used = true;
+    public void transform(String action, boolean status){
+        if (transformation.containsKey(action)) {
+            System.out.println(action + " already used on " + name);
+        } else {
+            transformation.put(action, status);
+        }
     }
 }

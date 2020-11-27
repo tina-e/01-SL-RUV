@@ -57,7 +57,8 @@ public class PestoRecipe extends Recipe{
 
     private Sequence<Recipe> buildBlendingSequence() {
         return new Sequence<>(
-                new Add<Recipe>((MixingCup) tools.get(Constants.MIXING_CUP),
+                //todo: randoms daraus machen
+                new Add<Recipe>(tools.get(Constants.MIXING_CUP),
                         ingredients.get(Constants.RAMSONS),
                         ingredients.get(Constants.PARMESAN),
                         ingredients.get(Constants.LEMON_PEEL),

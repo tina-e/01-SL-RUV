@@ -8,8 +8,8 @@ import recipe.Recipe;
 public class Main {
 
     public static void main(String[] args) {
-        //Recipe myRecipe = new PestoRecipe("Pesto");
-        Recipe myRecipe = new SaladRecipe("Salad");
+        Recipe myRecipe = new PestoRecipe("Pesto");
+        //Recipe myRecipe = new SaladRecipe("Salad");
         //Recipe myRecipe = new ZucPestoRecipe("Zuchini-Pesto");
 
         myRecipe.init();

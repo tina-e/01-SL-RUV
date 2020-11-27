@@ -4,6 +4,10 @@ public final class Product extends Ingredient{
     static double amount;
     static boolean used;
 
+    public Product(String name) {
+        this.name = name;
+    }
+
     static void addAmount(double amountToAdd){
         amount = amount + amountToAdd;
     }

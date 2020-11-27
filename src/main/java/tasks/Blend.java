@@ -19,6 +19,7 @@ public class Blend<Recipe> extends LeafTask<Recipe> {
     public Status execute() {
         StringBuilder sb = new StringBuilder("blending ");
         for (int i = 0; i < ingredients.length; i++) {
+            ingredients[i].transform("blended", true);
             sb.append(ingredients[i].getName());
             if (i < ingredients.length - 1) sb.append(", ");
         }

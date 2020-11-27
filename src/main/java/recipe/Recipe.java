@@ -2,6 +2,7 @@ package recipe;
 
 import behaviourtree.RecipeTree;
 import ingredient.Ingredient;
+import ingredient.Product;
 import tool.Kitchentool;
 
 import java.util.HashMap;
@@ -16,33 +17,29 @@ public abstract class Recipe {
     HashMap<String, Ingredient> ingredients;
     RecipeTree instructions;
 
+    Product product;
+
     public Recipe(String name){
         this.name = name;
         tools = new HashMap<>();
         ingredients = new HashMap<>();
         instructions = new RecipeTree();
         instructions.setObject(this);
+        product = new Product("Pesto");
     }
 
     public abstract void init();
-
-    public void addIngredient(Ingredient newIngredient){
-        ingredients.put(newIngredient.getName(), newIngredient);
-    }
-
-    public Ingredient findIngredient(String ingredientString){
-        return ingredients.get(ingredientString);
-    }
 
     public RecipeTree getTree(){
         return instructions;
     }
 
+    //todo: hier iw random was voll GUTES ausgeben
     public void status(){
         Set<Map.Entry<String, Ingredient>> ingredientSet = ingredients.entrySet();
 
         for(Map.Entry<String, Ingredient> setEntry : ingredientSet){
-            System.out.println(setEntry.getValue().getName() + " has used-status: " + setEntry.getValue().isUsed());
+            System.out.println(setEntry.getValue().getName() + " has used-status: " + setEntry.getValue().getTransformation("used"));
         }
     }
 }
