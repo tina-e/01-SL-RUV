@@ -18,7 +18,7 @@ public class TastesGood extends LeafTask {
 
     public Status execute() {
         Scanner s = new Scanner(System.in);
-        System.out.print("Willst du noch abschmecken: (j/n): ");
+        System.out.print("Do you want to taste it?: (j/n): ");
         String input = s.nextLine();
         if (input.startsWith("j")) {
             product.transform("tastesGood", false);

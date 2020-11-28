@@ -15,6 +15,7 @@ public class Dry<Recipe> extends LeafTask<Recipe> {
     @Override
     public Status execute() {
         System.out.println("drying " + ingredient.getName());
+        ingredient.transform("dry", true);
         return Status.SUCCEEDED;
     }
 

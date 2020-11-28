@@ -8,6 +8,7 @@ import quantity.Quantity;
 import tool.Kitchentool;
 import tool.MixingCup;
 
+import javax.sound.midi.Sequence;
 import javax.tools.Tool;
 
 public class Add<Recipe> extends LeafTask<Recipe> {
@@ -24,13 +25,25 @@ public class Add<Recipe> extends LeafTask<Recipe> {
         this.product = product;
     }
 
+    public Add(Kitchentool tool, Ingredient ingredients) {
+        this.ingredient = ingredients;
+        this.tool = tool;
+    }
+
     @Override
     public Status execute() {
-        ingredient.transform("used", true);
-        System.out.println("added " + quantity.toString() + " of " + ingredient.getName() +
-                " to " + product.getName() + " in " + tool.getName());
-        //todo: quantity zu product adden
-        return Status.SUCCEEDED;
+        if(this.product != null){
+            ingredient.transform("used", true);
+            System.out.println("added " + quantity.getAmount() + " of " + ingredient.getName() +
+                    " to " + product.getName() + " in " + tool.getName());
+            //todo: quantity zu product adden
+            return Status.SUCCEEDED;
+        }else{
+            System.out.println("added " + ingredient.getName()+
+                    " to " + tool.getName());
+            return Status.SUCCEEDED;
+        }
+
     }
 
     @Override

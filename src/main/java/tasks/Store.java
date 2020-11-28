@@ -6,18 +6,17 @@ import ingredient.Ingredient;
 import ingredient.Product;
 import recipe.Recipe;
 
-public class Season extends LeafTask<Recipe> {
-
-    Ingredient ingredient;
+public class Store extends LeafTask<Recipe> {
+    String howToStore;
     Product product;
-    public Season(Ingredient ingredient, Product product) {
-        this.ingredient = ingredient;
+    public Store(Product product, String howToStore) {
         this.product = product;
+        this.howToStore = howToStore;
     }
 
     @Override
     public Status execute() {
-        System.out.println("Seasoning "+ product.getName() + " with "+ ingredient.getName());
+        System.out.println("Storing "+product.getName()+ howToStore);
         return Status.SUCCEEDED;
     }
 

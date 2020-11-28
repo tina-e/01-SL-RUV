@@ -2,15 +2,28 @@ package tasks;
 
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
+import ingredient.Ingredient;
+import ingredient.Product;
 
-public class Arrange <Recipe> extends LeafTask<Recipe> {
-    @Override
-    public Status execute() {
-        return null;
+import javax.sound.midi.Sequence;
+
+public class Arrange extends LeafTask {
+    private Product product;
+    private String howToArrange;
+    public Arrange(Product product, String howToArrange) {
+        this.product = product;
+        this.howToArrange = howToArrange;
     }
 
     @Override
-    protected Task<Recipe> copyTo(Task<Recipe> task) {
+    public Status execute() {
+        System.out.println("arranging " + product.getName() + " in the form of : "+ howToArrange);
+        product.transform("arranging ", true);
+        return Status.SUCCEEDED;
+    }
+
+    @Override
+    protected Task copyTo(Task task) {
         return null;
     }
 }

@@ -4,21 +4,22 @@ import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 import ingredient.Ingredient;
 
-public class Wash <Recipe> extends LeafTask<Recipe> {
+import javax.sound.midi.Sequence;
+
+public class Peel extends LeafTask {
     private Ingredient ingredient;
-    public Wash(Ingredient ingredient){
+    public Peel(Ingredient ingredient){
         this.ingredient = ingredient;
     }
-
     @Override
     public Status execute() {
-        ingredient.transform("washed", true);
-        System.out.println(ingredient.getName() + " got washed");
+        ingredient.transform("peeled", true);
+        System.out.println(ingredient.getName() + " got peeled");
         return Status.SUCCEEDED;
     }
 
     @Override
-    protected Task<Recipe> copyTo(Task<Recipe> task) {
+    protected Task copyTo(Task task) {
         return null;
     }
 }

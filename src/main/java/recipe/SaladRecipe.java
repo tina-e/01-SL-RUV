@@ -26,7 +26,6 @@ public class SaladRecipe extends Recipe{
         populateMaps();
         cookingTask.addChild(buildPrepareSequence());
         cookingTask.addChild(buildBlendingSequence());
-        cookingTask.addChild(new Season<>(ingredients.get(Constants.SALT), ingredients.get(Constants.PEPPER)));
         instructions.addChild(cookingTask);
     }
 

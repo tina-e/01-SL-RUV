@@ -11,4 +11,8 @@ abstract public class Quantity {
         name = n;
         amount = m;
     }
+
+    public double getAmount(){
+        return amount;
+    }
 }

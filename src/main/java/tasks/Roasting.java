@@ -8,16 +8,16 @@ import tool.Kitchentool;
 import java.util.ArrayList;
 
 public class Roasting<Rezept> extends LeafTask<Rezept> {
-    ArrayList<Ingredient> ingredients;
+    Ingredient ingredient;
     Kitchentool tool;
 
-    public Roasting(Ingredient i, Kitchentool t){
-        super();
-        tool = t;
-        ingredients = new ArrayList<>();
-        ingredients.add(i);
+    public Roasting(Ingredient ingredient, Kitchentool kitchentool){
+        this.tool = kitchentool;
+        this.ingredient = ingredient;
     }
     public Status execute(){
+        ingredient.transform("roasted", true);
+        System.out.println(ingredient.getName() +" has been roasted in " + tool.getName());
         return Status.SUCCEEDED;
     }
 

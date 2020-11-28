@@ -28,7 +28,7 @@ public abstract class Ingredient {
 
     public void transform(String action, boolean status){
         if (transformation.containsKey(action)) {
-            System.out.println(action + " already used on " + name);
+            System.out.println(action + " already applied on " + name);
         } else {
             transformation.put(action, status);
         }
