@@ -9,14 +9,14 @@ import ingredient.*;
 import tasks.*;
 import tool.Plate;
 
-//todo: an rezept anpassen + mengen nicht vergessen
-
+//todo: Mengen
 public class SaladRecipe extends Recipe{
 
     Sequence<Recipe> cookingTask;
 
     public SaladRecipe(String name) {
         super(name);
+        product = new Product("Salad");
     }
 
     @Override
@@ -42,17 +42,17 @@ public class SaladRecipe extends Recipe{
     }
 
     private Sequence<Recipe> buildSequence() {
-        return new Sequence<Recipe>(
-            new RandomSequence<Recipe>(
-                    new Sequence<Recipe>(
+        return new Sequence<>(
+            new RandomSequence<>(
+                    new Sequence<>(
                             new Wash<>(ingredients.get(Constants.TOMATO)),
                             new Slice<>(ingredients.get(Constants.TOMATO))
                     ),
-                    new Sequence<Recipe>(
+                    new Sequence<>(
                             new Wash<>(ingredients.get(Constants.NECTARINE)),
                             new Slice<>(ingredients.get(Constants.NECTARINE))
                     ),
-                    new Sequence<Recipe>(
+                    new Sequence<>(
                             new Parallel<>(
                                     new Wash<>(ingredients.get(Constants.ARUGULA)),
                                     new Wash<>(ingredients.get(Constants.ROMAINELETTUCE))
@@ -73,7 +73,6 @@ public class SaladRecipe extends Recipe{
                     ),
                     new Pluck<>(ingredients.get(Constants.MOZZARELLA))
             ),
-            //Kitchentool tool, Ingredient ingredients, Quantity quantity, Product product
             new RandomSequence<>(
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.BASIL), product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.ROMAINELETTUCE), product),
