@@ -9,7 +9,6 @@ import ingredient.*;
 import tasks.*;
 import tool.Plate;
 
-//todo: Mengen
 public class SaladRecipe extends Recipe{
 
     Sequence<Recipe> cookingTask;
@@ -74,6 +73,7 @@ public class SaladRecipe extends Recipe{
                     new Pluck<>(ingredients.get(Constants.MOZZARELLA))
             ),
             new RandomSequence<>(
+                    //todo: mengen fehlen noch
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.BASIL), product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.ROMAINELETTUCE), product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.ARUGULA), product),
