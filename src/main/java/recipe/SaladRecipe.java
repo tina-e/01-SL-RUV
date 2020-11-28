@@ -41,23 +41,23 @@ public class SaladRecipe extends Recipe{
     }
 
     private Sequence<Recipe> buildSequence() {
-        return new Sequence<>(
-            new RandomSequence<>(
-                    new Sequence<>(
+        return new Sequence(
+            new RandomSequence(
+                    new Sequence(
                             new Wash<>(ingredients.get(Constants.TOMATO)),
                             new Slice<>(ingredients.get(Constants.TOMATO))
                     ),
-                    new Sequence<>(
+                    new Sequence(
                             new Wash<>(ingredients.get(Constants.NECTARINE)),
                             new Slice<>(ingredients.get(Constants.NECTARINE))
                     ),
-                    new Sequence<>(
-                            new Parallel<>(
+                    new Sequence(
+                            new Parallel(
                                     new Wash<>(ingredients.get(Constants.ARUGULA)),
                                     new Wash<>(ingredients.get(Constants.ROMAINELETTUCE))
                             ),
-                            new UntilSuccess<>(
-                                    new Sequence<>(
+                            new UntilSuccess(
+                                    new Sequence(
                                             new Dry(ingredients.get(Constants.ARUGULA)),
                                             new Dry(ingredients.get(Constants.ROMAINELETTUCE)),
                                             new IsDry(ingredients.get(Constants.ARUGULA)),
@@ -66,13 +66,13 @@ public class SaladRecipe extends Recipe{
                             ),
                             new Slice<>(ingredients.get(Constants.ROMAINELETTUCE))
                     ),
-                    new Sequence<>(
+                    new Sequence(
                             new Wash<>(ingredients.get(Constants.BASIL)),
                             new Pluck<>(ingredients.get(Constants.BASIL))
                     ),
                     new Pluck<>(ingredients.get(Constants.MOZZARELLA))
             ),
-            new RandomSequence<>(
+            new RandomSequence(
                     //todo: mengen fehlen noch
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.BASIL), product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.ROMAINELETTUCE), product),
@@ -81,7 +81,7 @@ public class SaladRecipe extends Recipe{
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.NECTARINE), product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.PARMA_HAM), product)
             ),
-            new RandomSequence<>(
+            new RandomSequence(
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.LIGHT_BALSAMICO), product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.SALT), product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.PEPPER), product),
