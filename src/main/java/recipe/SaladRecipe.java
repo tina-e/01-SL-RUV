@@ -1,16 +1,13 @@
 package recipe;
 
 import com.badlogic.gdx.ai.btree.branch.Parallel;
+import com.badlogic.gdx.ai.btree.branch.RandomSequence;
 import com.badlogic.gdx.ai.btree.branch.Sequence;
+import com.badlogic.gdx.ai.btree.decorator.UntilSuccess;
 import config.Constants;
 import ingredient.*;
 import tasks.*;
-import tool.Blender;
-import tool.Grater;
-import tool.MixingCup;
 import tool.Plate;
-
-//todo: an rezept anpassen + mengen nicht vergessen
 
 public class SaladRecipe extends Recipe{
 
@@ -18,14 +15,13 @@ public class SaladRecipe extends Recipe{
 
     public SaladRecipe(String name) {
         super(name);
-        cookingTask = new Sequence<>();
+        product = new Product("Salad");
     }
 
     @Override
     public void init() {
         populateMaps();
-        cookingTask.addChild(buildPrepareSequence());
-        cookingTask.addChild(buildBlendingSequence());
+        cookingTask = buildSequence();
         instructions.addChild(cookingTask);
     }
 
@@ -33,6 +29,7 @@ public class SaladRecipe extends Recipe{
         tools.put(Constants.PLATE, new Plate());
         ingredients.put(Constants.TOMATO, new Tomato());
         ingredients.put(Constants.NECTARINE, new Nectarine());
+        ingredients.put(Constants.ARUGULA, new Arugula());
         ingredients.put(Constants.ROMAINELETTUCE, new RomaineLettuce());
         ingredients.put(Constants.BASIL, new Basil());
         ingredients.put(Constants.MOZZARELLA, new Mozzarella());
@@ -43,33 +40,53 @@ public class SaladRecipe extends Recipe{
         ingredients.put(Constants.PEPPER, new Pepper());
     }
 
-    private Parallel<Recipe> buildPrepareSequence() {
-        Parallel<Recipe> prepareTask = new Parallel<>();
-        prepareTask.addChild(new Grate<Recipe>(ingredients.get(Constants.PARMESAN), (Grater) tools.get(Constants.GRATER)));
-        prepareTask.addChild(new Grate<Recipe>(ingredients.get(Constants.LEMON_PEEL), (Grater) tools.get(Constants.GRATER)));
-        Ingredient ramsons = ingredients.get(Constants.RAMSONS);
-        Sequence<Recipe> ramsonsSequence = new Sequence<>(
-                new Clean<>(ramsons),
-                new Dry<>(ramsons),
-                new Pluck<>(ramsons, 80));
-        prepareTask.addChild(ramsonsSequence);
-        return prepareTask;
-    }
-
-    private Sequence<Recipe> buildBlendingSequence() {
-        return new Sequence<>();
-        /*
-                new Add<Recipe>((MixingCup) tools.get(Constants.MIXING_CUP),
-                        ingredients.get(Constants.RAMSONS),
-                        ingredients.get(Constants.PARMESAN),
-                        ingredients.get(Constants.LEMON_PEEL),
-                        ingredients.get(Constants.PISTACHIO),
-                        ingredients.get(Constants.OLIVE_OIL)),
-                new Blend<Recipe>((Blender) tools.get(Constants.BLENDER),
-                        ingredients.get(Constants.RAMSONS),
-                        ingredients.get(Constants.PARMESAN),
-                        ingredients.get(Constants.LEMON_PEEL),
-                        ingredients.get(Constants.PISTACHIO),
-                        ingredients.get(Constants.OLIVE_OIL)));*/
+    private Sequence<Recipe> buildSequence() {
+        return new Sequence<>(
+            new RandomSequence<>(
+                    new Sequence<>(
+                            new Wash<>(ingredients.get(Constants.TOMATO)),
+                            new Slice<>(ingredients.get(Constants.TOMATO))
+                    ),
+                    new Sequence<>(
+                            new Wash<>(ingredients.get(Constants.NECTARINE)),
+                            new Slice<>(ingredients.get(Constants.NECTARINE))
+                    ),
+                    new Sequence<>(
+                            new Parallel<>(
+                                    new Wash<>(ingredients.get(Constants.ARUGULA)),
+                                    new Wash<>(ingredients.get(Constants.ROMAINELETTUCE))
+                            ),
+                            new UntilSuccess<>(
+                                    new Sequence<>(
+                                            new Dry(ingredients.get(Constants.ARUGULA)),
+                                            new Dry(ingredients.get(Constants.ROMAINELETTUCE)),
+                                            new IsDry(ingredients.get(Constants.ARUGULA)),
+                                            new IsDry(ingredients.get(Constants.ROMAINELETTUCE))
+                                    )
+                            ),
+                            new Slice<>(ingredients.get(Constants.ROMAINELETTUCE))
+                    ),
+                    new Sequence<>(
+                            new Wash<>(ingredients.get(Constants.BASIL)),
+                            new Pluck<>(ingredients.get(Constants.BASIL))
+                    ),
+                    new Pluck<>(ingredients.get(Constants.MOZZARELLA))
+            ),
+            new RandomSequence<>(
+                    //todo: mengen fehlen noch
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.BASIL), product),
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.ROMAINELETTUCE), product),
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.ARUGULA), product),
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.TOMATO), product),
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.NECTARINE), product),
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.PARMA_HAM), product)
+            ),
+            new RandomSequence<>(
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.LIGHT_BALSAMICO), product),
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.SALT), product),
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.PEPPER), product),
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.OLIVE_OIL), product)
+            )
+        );
     }
 }

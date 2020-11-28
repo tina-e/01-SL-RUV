@@ -13,6 +13,10 @@ public class Pluck<Recipe> extends LeafTask<Recipe> {
         this.ingredient = ingredient;
         this.amount = amount;
     }
+    public Pluck(Ingredient ingredient) {
+        this.ingredient = ingredient;
+        this.amount = 10;
+    }
 
     @Override
     public Status execute() {
