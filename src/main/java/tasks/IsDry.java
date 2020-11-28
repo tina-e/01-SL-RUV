@@ -12,7 +12,7 @@ public class IsDry extends LeafTask {
 
     @Override
     public Status execute() {
-        if(this.ingredient.getTransformation("dry")){
+        if(ingredient.getTransformation("dry")){
             System.out.println(ingredient.getName() + " is dry");
             return Status.SUCCEEDED;
         }

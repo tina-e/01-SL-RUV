@@ -5,6 +5,7 @@ import com.badlogic.gdx.ai.btree.Task;
 import ingredient.Ingredient;
 import ingredient.Product;
 import quantity.Quantity;
+import quantity.Weight;
 import tool.Kitchentool;
 import tool.MixingCup;
 
@@ -23,6 +24,13 @@ public class Add<Recipe> extends LeafTask<Recipe> {
         this.tool = tool;
         this.quantity = quantity;
         this.product = product;
+    }
+
+    public Add(Kitchentool tool, Ingredient ingredients, Product product) {
+        this.ingredient = ingredients;
+        this.tool = tool;
+        this.product = product;
+        this.quantity = new Weight(10);
     }
 
     public Add(Kitchentool tool, Ingredient ingredients) {
