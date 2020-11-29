@@ -20,7 +20,7 @@ public class Bottle extends LeafTask {
         int amount = 5;
         jar.addAmount(amount);
         product.subAmount(amount);
-        System.out.println("bottled " + amount + " of " + product.getName() + " in " + jar.getName() + ".");
+        System.out.println("bottled " + amount + "g of " + product.getName() + " in " + jar.getName() + ".");
         return Status.SUCCEEDED;
     }
 

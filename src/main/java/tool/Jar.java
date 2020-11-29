@@ -12,16 +12,15 @@ public class Jar extends Kitchentool{
         space = TOTAL_SPACE;
     }
 
-    public Jar(String name) {
-        super(name);
-        space = TOTAL_SPACE;
-    }
-
     public void addAmount(int amount) {
         space -= amount;
     }
 
     public int getSpace() {
         return space;
+    }
+
+    public void resetSpace() {
+        this.space = TOTAL_SPACE;
     }
 }

@@ -10,18 +10,8 @@ public abstract class Ingredient {
     protected Quantity quantity;
     protected HashMap<String, Boolean> transformation;
 
-    //todo: evtl used rauslöschen
-
-    public Ingredient(){
-        transformation = new HashMap<String, Boolean>();
-        transformation.put("used", Boolean.FALSE);
-        quantity = new Weight();
-    }
     public Ingredient(String n){
-        name = n;
-        quantity = new Weight();
-        transformation = new HashMap<String, Boolean>();
-        transformation.put("used", Boolean.FALSE);
+        this(n, new Weight());
     }
 
     public Ingredient(String n, Quantity q){

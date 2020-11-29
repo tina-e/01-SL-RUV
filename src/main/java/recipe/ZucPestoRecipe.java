@@ -4,6 +4,8 @@ import com.badlogic.gdx.ai.btree.branch.Parallel;
 import com.badlogic.gdx.ai.btree.branch.RandomSequence;
 import com.badlogic.gdx.ai.btree.branch.Selector;
 import com.badlogic.gdx.ai.btree.branch.Sequence;
+import com.badlogic.gdx.ai.btree.decorator.Invert;
+import com.badlogic.gdx.ai.btree.decorator.UntilFail;
 import com.badlogic.gdx.ai.btree.decorator.UntilSuccess;
 import config.Constants;
 import ingredient.*;
@@ -18,16 +20,13 @@ import tool.MixingCup;*/
 
 import tool.*;
 
-
-//todo: an rezept anpassen + mengen nicht vergessen
-
 public class ZucPestoRecipe extends Recipe {
 
     Sequence<Recipe> cookingTask;
 
     public ZucPestoRecipe(String name) {
         super(name);
-        product = new Product("Zuccini Pesto");
+        product = new Product("Zucchini Pesto");
         cookingTask = new Sequence<>();
     }
 
@@ -78,11 +77,21 @@ public class ZucPestoRecipe extends Recipe {
         addToMixing.addChild(new Add(tools.get(Constants.MIXING_CUP),ingredients.get(Constants.PUMPKINSEEDS)));
         addToMixing.addChild(new Add(tools.get(Constants.MIXING_CUP),ingredients.get(Constants.OLIVE_OIL+1) ));
         cookingTask.addChild(addToMixing);
-        cookingTask.addChild(new Blend<Recipe>((Blender) tools.get(Constants.BLENDER), tools.get(Constants.MIXING_CUP) , ingredients.get(Constants.GARLICCLOVE),ingredients.get(Constants.ZUCCHINI),ingredients.get(Constants.BASIL),ingredients.get(Constants.PARMESAN),ingredients.get(Constants.ALMONDS),ingredients.get(Constants.PUMPKINSEEDS),ingredients.get(Constants.OLIVE_OIL+1)));
-        //todo: salz und pfeffer
-        cookingTask.addChild(new Selector<>(new TastesGood(product, ingredients.get(Constants.SALT)), new Sequence<>(new Season(ingredients.get(Constants.SALT), product), new Season(ingredients.get(Constants.PEPPER), product))));
-        cookingTask.addChild(new Sequence<Recipe>(new Add<Recipe>(tools.get(Constants.JAR), product), new Arrange(product, "flat"),new Add<Recipe>(tools.get(Constants.JAR), ingredients.get(Constants.OLIVE_OIL+2),new BigSpoon(1), product)));
-
+        cookingTask.addChild(
+                new Blend<Recipe>((Blender) tools.get(Constants.BLENDER),
+                        tools.get(Constants.MIXING_CUP) ,
+                        ingredients.get(Constants.GARLICCLOVE),
+                        ingredients.get(Constants.ZUCCHINI),
+                        ingredients.get(Constants.BASIL),
+                        ingredients.get(Constants.PARMESAN),
+                        ingredients.get(Constants.ALMONDS),
+                        ingredients.get(Constants.PUMPKINSEEDS),
+                        ingredients.get(Constants.OLIVE_OIL+1)));
+        cookingTask.addChild(buildTasteTestSequence());
+        cookingTask.addChild(new Sequence<Recipe>(
+                new Add<Recipe>(tools.get(Constants.JAR), product),
+                new Arrange(product, "flat"),new Add<Recipe>(tools.get(Constants.JAR), ingredients.get(Constants.OLIVE_OIL+2),
+                new BigSpoon(1), product)));
         cookingTask.addChild(new Store(product, "chill and dry"));
     }
 
@@ -91,7 +100,10 @@ public class ZucPestoRecipe extends Recipe {
         sequence.addChild(new Peel(ingredients.get(Constants.GARLICCLOVE)));
         sequence.addChild(new Wash(ingredients.get(Constants.ZUCCHINI)));
         sequence.addChild(new Wash(ingredients.get(Constants.BASIL)));
-        UntilSuccess<Recipe> dryBasil = new UntilSuccess<>(new Sequence<>(new Dry<>(ingredients.get(Constants.BASIL)), new IsDry(ingredients.get(Constants.BASIL))));
+        UntilSuccess<Recipe> dryBasil = new UntilSuccess<>(
+                new Sequence<>(
+                        new Dry<>(ingredients.get(Constants.BASIL)),
+                        new IsDry(ingredients.get(Constants.BASIL))));
         sequence.addChild(dryBasil);
         return sequence;
     }
@@ -110,11 +122,38 @@ public class ZucPestoRecipe extends Recipe {
         sequence.addChild(new Add(tools.get(Constants.PAN),ingredients.get(Constants.ALMONDS)));
         sequence.addChild(new Add(tools.get(Constants.PAN),ingredients.get(Constants.PUMPKINSEEDS)));
 
-        UntilSuccess success = new UntilSuccess(new Sequence(new Roasting(ingredients.get(Constants.ALMONDS),tools.get(Constants.PAN)),new Roasting(ingredients.get(Constants.PUMPKINSEEDS),tools.get(Constants.PAN)), new IsRoasted(ingredients.get(Constants.ALMONDS)),new IsRoasted(ingredients.get(Constants.PUMPKINSEEDS))));
+        UntilSuccess success = new UntilSuccess(
+                new Sequence(
+                        new Roasting(ingredients.get(Constants.ALMONDS),tools.get(Constants.PAN)),
+                        new Roasting(ingredients.get(Constants.PUMPKINSEEDS),tools.get(Constants.PAN)),
+                        new IsRoasted(ingredients.get(Constants.ALMONDS)),
+                        new IsRoasted(ingredients.get(Constants.PUMPKINSEEDS))));
         sequence.addChild(success);
         sequence.addChild(new Remove(tools.get(Constants.PAN),ingredients.get(Constants.PUMPKINSEEDS)));
         sequence.addChild(new Remove(tools.get(Constants.PAN),ingredients.get(Constants.ALMONDS)));
         return sequence;
+    }
+
+    private RandomSequence<Recipe> buildTasteTestSequence() {
+        MixingCup mixingCup = (MixingCup) tools.get(Constants.MIXING_CUP);
+        return new RandomSequence<Recipe>(
+                new UntilFail(
+                        new Sequence(
+                                new Invert(
+                                        new TastesGood(product, ingredients.get(Constants.SALT))
+                                ),
+                                new Add(mixingCup, ingredients.get(Constants.SALT), product)
+                        )
+                ),
+                new UntilFail(
+                        new Sequence(
+                                new Invert(
+                                        new TastesGood(product, ingredients.get(Constants.PEPPER))
+                                ),
+                                new Add<>(mixingCup, ingredients.get(Constants.PEPPER), product)
+                        )
+                )
+        );
     }
 
 }

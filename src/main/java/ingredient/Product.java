@@ -5,7 +5,7 @@ public class Product extends Ingredient{
     private double amount;
 
     public Product(String name) {
-        this.name = name;
+        super(name);
     }
 
     public void addAmount(double amountToAdd){
@@ -14,7 +14,7 @@ public class Product extends Ingredient{
 
     public void subAmount(double amountToSub){
         amount = amount - amountToSub;
-        if(amount <= 0){
+        if(amount < amountToSub){
             this.transform("used", true);
         }
     }

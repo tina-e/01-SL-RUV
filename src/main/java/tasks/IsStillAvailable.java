@@ -14,14 +14,7 @@ public class IsStillAvailable extends LeafTask {
 
     @Override
     public Status execute() {
-        //System.out.println("Checking status of ingredient" + ingredient.getTransformation("used"));
-        //return (ingredient.getTransformation("used")) ? Status.FAILED : Status.SUCCEEDED;
-        if(ingredient.getTransformation("used") == false){
-            System.out.println("Failing task");
-            return Status.SUCCEEDED;
-        }else{
-            return Status.FAILED;
-        }
+        return (ingredient.getTransformation("used")) ? Status.FAILED : Status.SUCCEEDED;
     }
 
     @Override

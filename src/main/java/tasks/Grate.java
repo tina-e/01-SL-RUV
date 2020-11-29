@@ -20,7 +20,7 @@ public class Grate<Recipe> extends LeafTask<Recipe> {
     @Override
     public Status execute() {
         ingredient.transform("grated", true);
-        System.out.println("used " + grater.getName() + " to grate " + ingredient.getName() + " status: " + ingredient.getTransformation("grated"));
+        System.out.println("used " + grater.getName() + " to grate " + ingredient.getName());
         return Status.SUCCEEDED;
     }
 

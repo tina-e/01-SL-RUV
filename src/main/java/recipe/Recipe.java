@@ -25,7 +25,6 @@ public abstract class Recipe {
         ingredients = new HashMap<>();
         instructions = new RecipeTree();
         instructions.setObject(this);
-        product = new Product("Pesto"); //TODO has to be assigned in lower class
     }
 
     public abstract void init();
@@ -34,10 +33,8 @@ public abstract class Recipe {
         return instructions;
     }
 
-    //todo: hier iw random was voll GUTES ausgeben
     public void status(){
         Set<Map.Entry<String, Ingredient>> ingredientSet = ingredients.entrySet();
-
         for(Map.Entry<String, Ingredient> setEntry : ingredientSet){
             System.out.println(setEntry.getValue().getName() + " has used-status: " + setEntry.getValue().getTransformation("used"));
         }
