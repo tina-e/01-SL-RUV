@@ -1,21 +1,25 @@
 package ingredient;
 
-public final class Product extends Ingredient{
-    static double amount;
-    static boolean used;
+public class Product extends Ingredient{
+
+    private double amount;
 
     public Product(String name) {
         this.name = name;
     }
 
-    static void addAmount(double amountToAdd){
+    public void addAmount(double amountToAdd){
         amount = amount + amountToAdd;
     }
 
-    static void subAmount(double amountToSub){
+    public void subAmount(double amountToSub){
         amount = amount - amountToSub;
         if(amount <= 0){
-            used = true;
+            this.transform("used", true);
         }
+    }
+
+    public double getAmount() {
+        return amount;
     }
 }

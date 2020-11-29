@@ -5,12 +5,7 @@ import com.badlogic.gdx.ai.btree.Task;
 import ingredient.Ingredient;
 import ingredient.Product;
 import quantity.Quantity;
-import quantity.Weight;
 import tool.Kitchentool;
-import tool.MixingCup;
-
-import javax.sound.midi.Sequence;
-import javax.tools.Tool;
 
 public class Add<Recipe> extends LeafTask<Recipe> {
 
@@ -19,23 +14,24 @@ public class Add<Recipe> extends LeafTask<Recipe> {
     Quantity quantity;
     Product product;
 
-    public Add(Kitchentool tool, Ingredient ingredients, Quantity quantity, Product product) {
-        this.ingredient = ingredients;
+    public Add(Kitchentool tool, Ingredient ingredient, Quantity quantity, Product product) {
+        this.ingredient = ingredient;
         this.tool = tool;
         this.quantity = quantity;
         this.product = product;
     }
 
-    public Add(Kitchentool tool, Ingredient ingredients, Product product) {
-        this.ingredient = ingredients;
+    public Add(Kitchentool tool, Ingredient ingredient, Product product) {
+        this.ingredient = ingredient;
         this.tool = tool;
         this.product = product;
-        this.quantity = new Weight(10);
+        this.quantity = ingredient.getQuantity();
     }
 
-    public Add(Kitchentool tool, Ingredient ingredients) {
-        this.ingredient = ingredients;
+    public Add(Kitchentool tool, Ingredient ingredient) {
+        this.ingredient = ingredient;
         this.tool = tool;
+        this.quantity = ingredient.getQuantity();
     }
 
     @Override
@@ -44,14 +40,12 @@ public class Add<Recipe> extends LeafTask<Recipe> {
             ingredient.transform("used", true);
             System.out.println("added " + quantity.getAmount() + " of " + ingredient.getName() +
                     " to " + product.getName() + " in " + tool.getName());
-            //todo: quantity zu product adden
-            return Status.SUCCEEDED;
-        }else{
-            System.out.println("added " + ingredient.getName()+
-                    " to " + tool.getName());
+            product.addAmount(quantity.getAmount());
             return Status.SUCCEEDED;
         }
-
+        System.out.println("added " + ingredient.getName()+
+                " to " + tool.getName());
+        return Status.SUCCEEDED;
     }
 
     @Override

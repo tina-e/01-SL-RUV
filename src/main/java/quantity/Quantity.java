@@ -1,6 +1,7 @@
 package quantity;
 
 abstract public class Quantity {
+
     protected String name;
     protected double amount;
 
