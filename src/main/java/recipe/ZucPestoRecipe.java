@@ -9,6 +9,7 @@ import config.Constants;
 import ingredient.*;
 import quantity.BigSpoon;
 import quantity.Quantity;
+import quantity.Weight;
 import tasks.*;
 
 //import tool.Blender;
@@ -44,13 +45,14 @@ public class ZucPestoRecipe extends Recipe {
         tools.put(Constants.PAN, new Pan());
         tools.put(Constants.JAR, new Jar());
 
-        ingredients.put(Constants.ALMONDS, new Almonds());
-        ingredients.put(Constants.PUMPKINSEEDS, new PumpkinSeeds());
-        ingredients.put(Constants.GARLICCLOVE, new GarlicClove());
-        ingredients.put(Constants.PARMESAN, new Parmesan());
-        ingredients.put(Constants.ZUCCHINI, new Zucchini());
-        ingredients.put(Constants.BASIL, new Basil());
-        ingredients.put(Constants.OLIVE_OIL, new OliveOil());
+        ingredients.put(Constants.ALMONDS, new Almonds(new Weight(100)));
+        ingredients.put(Constants.PUMPKINSEEDS, new PumpkinSeeds(new Weight(75)));
+        ingredients.put(Constants.GARLICCLOVE, new GarlicClove(new Weight(5* 34)));
+        ingredients.put(Constants.PARMESAN, new Parmesan(new Weight(75)));
+        ingredients.put(Constants.ZUCCHINI, new Zucchini(new Weight(300)));
+        ingredients.put(Constants.BASIL, new Basil(new Weight(40)));
+        ingredients.put(Constants.OLIVE_OIL+1, new OliveOil(new Weight(250)));
+        ingredients.put(Constants.OLIVE_OIL+2, new OliveOil());
         ingredients.put(Constants.SALT, new Salt());
         ingredients.put(Constants.PEPPER, new Pepper());
     }
@@ -74,11 +76,11 @@ public class ZucPestoRecipe extends Recipe {
         addToMixing.addChild(new Add(tools.get(Constants.MIXING_CUP),ingredients.get(Constants.PARMESAN)));
         addToMixing.addChild(new Add(tools.get(Constants.MIXING_CUP),ingredients.get(Constants.ALMONDS)));
         addToMixing.addChild(new Add(tools.get(Constants.MIXING_CUP),ingredients.get(Constants.PUMPKINSEEDS)));
-        addToMixing.addChild(new Add(tools.get(Constants.MIXING_CUP),ingredients.get(Constants.OLIVE_OIL) )); //TODO add 250 mil stuff
+        addToMixing.addChild(new Add(tools.get(Constants.MIXING_CUP),ingredients.get(Constants.OLIVE_OIL+1) ));
         cookingTask.addChild(addToMixing);
-        cookingTask.addChild(new Blend<Recipe>((Blender) tools.get(Constants.BLENDER), tools.get(Constants.MIXING_CUP) , ingredients.get(Constants.GARLICCLOVE),ingredients.get(Constants.ZUCCHINI),ingredients.get(Constants.BASIL),ingredients.get(Constants.PARMESAN),ingredients.get(Constants.ALMONDS),ingredients.get(Constants.PUMPKINSEEDS),ingredients.get(Constants.OLIVE_OIL)));
+        cookingTask.addChild(new Blend<Recipe>((Blender) tools.get(Constants.BLENDER), tools.get(Constants.MIXING_CUP) , ingredients.get(Constants.GARLICCLOVE),ingredients.get(Constants.ZUCCHINI),ingredients.get(Constants.BASIL),ingredients.get(Constants.PARMESAN),ingredients.get(Constants.ALMONDS),ingredients.get(Constants.PUMPKINSEEDS),ingredients.get(Constants.OLIVE_OIL+1)));
         cookingTask.addChild(new Selector<>(new TastesGood(product), new Sequence<>(new Season(ingredients.get(Constants.SALT), product), new Season(ingredients.get(Constants.PEPPER), product))));
-        cookingTask.addChild(new Sequence<Recipe>(new Add<Recipe>(tools.get(Constants.JAR), product), new Arrange(product, "flat"),new Add<Recipe>(tools.get(Constants.JAR), ingredients.get(Constants.OLIVE_OIL),new BigSpoon(1), product)));
+        cookingTask.addChild(new Sequence<Recipe>(new Add<Recipe>(tools.get(Constants.JAR), product), new Arrange(product, "flat"),new Add<Recipe>(tools.get(Constants.JAR), ingredients.get(Constants.OLIVE_OIL+2),new BigSpoon(1), product)));
 
         cookingTask.addChild(new Store(product, "chill and dry"));
     }
@@ -98,7 +100,7 @@ public class ZucPestoRecipe extends Recipe {
         sequence.addChild(new Chop(ingredients.get(Constants.GARLICCLOVE), "diced"));
         sequence.addChild(new Chop(ingredients.get(Constants.PARMESAN), "diced"));
         sequence.addChild(new Chop(ingredients.get(Constants.ZUCCHINI), "diced"));
-        Sequence<Recipe> basil = new Sequence<>(new Dry<>(ingredients.get(Constants.BASIL)), new Pluck<>(ingredients.get(Constants.BASIL), 100));
+        Sequence<Recipe> basil = new Sequence<>(new Dry<>(ingredients.get(Constants.BASIL)), new Pluck<>(ingredients.get(Constants.BASIL)));
         sequence.addChild(basil);
         return sequence;
     }

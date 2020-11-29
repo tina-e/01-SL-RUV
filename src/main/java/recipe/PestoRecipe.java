@@ -79,7 +79,7 @@ public class PestoRecipe extends Recipe{
                 new Dry(ramsons),
                 new UntilSuccess(
                         //todo: quantity
-                        new Pluck(ramsons, 80)
+                        new Pluck(ramsons)
                 )
         );
     }
@@ -121,24 +121,47 @@ public class PestoRecipe extends Recipe{
     }
 
     private UntilFail<Recipe> buildBottleSequence() {
+        //System.out.println(requiredJars);
         int requiredJars = (int) Math.ceil(product.getAmount() / Jar.TOTAL_SPACE);
-        Sequence sequence = new Sequence();
-        for (int i = 0; i < requiredJars; i++) {
+        //Sequence sequence = new Sequence();
+
+        //sequence.addChild(new Debug(product));
+
+
+        /*for (int i = 0; i < requiredJars; i++) {
             tools.put(Constants.JAR + i, new Jar(Constants.JAR + i));
             sequence.addChild(buildJarSequence(i));
         }
+         */
+        tools.put(Constants.JAR, new Jar(Constants.JAR));
+
+
         return new UntilFail(
-                new Sequence(
-                        new IsStillAvailable(product),
-                        sequence
-                )
+                //new Sequence(
+                        //new IsStillAvailable(product),
+
+
+                        new Sequence(
+                                new IsStillAvailable(product),
+                                new UntilFail(
+                                        new Selector(
+                                                new IsStillAvailable(product),
+                                                new IsNotFull((Jar) tools.get(Constants.JAR)),
+                                                new Bottle((Jar) tools.get(Constants.JAR), product)
+                                        )
+                                ),
+                                new PutOn(product, ingredients.get(Constants.OLIVE_OIL + "1"))
+                        )
+                //)
         );
+
     }
 
     private Sequence buildJarSequence(int jarKey) {
         return new Sequence(
+                new IsStillAvailable(product),
                 new UntilFail(
-                        new Selector(
+                        new Sequence(
                                 new IsNotFull((Jar) tools.get(Constants.JAR + jarKey)),
                                 new Bottle((Jar) tools.get(Constants.JAR + jarKey), product)
                         )

@@ -6,6 +6,8 @@ import com.badlogic.gdx.ai.btree.branch.Sequence;
 import com.badlogic.gdx.ai.btree.decorator.UntilSuccess;
 import config.Constants;
 import ingredient.*;
+import quantity.BigSpoon;
+import quantity.Weight;
 import tasks.*;
 import tool.Plate;
 
@@ -27,15 +29,15 @@ public class SaladRecipe extends Recipe{
 
     private void populateMaps(){
         tools.put(Constants.PLATE, new Plate());
-        ingredients.put(Constants.TOMATO, new Tomato());
-        ingredients.put(Constants.NECTARINE, new Nectarine());
-        ingredients.put(Constants.ARUGULA, new Arugula());
-        ingredients.put(Constants.ROMAINELETTUCE, new RomaineLettuce());
-        ingredients.put(Constants.BASIL, new Basil());
-        ingredients.put(Constants.MOZZARELLA, new Mozzarella());
-        ingredients.put(Constants.PARMA_HAM, new ParmaHam());
-        ingredients.put(Constants.LIGHT_BALSAMICO, new LightBalsamico());
-        ingredients.put(Constants.OLIVE_OIL, new OliveOil());
+        ingredients.put(Constants.TOMATO, new Tomato(new Weight(800)));
+        ingredients.put(Constants.NECTARINE, new Nectarine(new Weight(300)));
+        ingredients.put(Constants.ARUGULA, new Arugula(new Weight(50)));
+        ingredients.put(Constants.ROMAINELETTUCE, new RomaineLettuce(new Weight(200)));
+        ingredients.put(Constants.BASIL, new Basil(new Weight(40)));
+        ingredients.put(Constants.MOZZARELLA, new Mozzarella(new Weight(250)));
+        ingredients.put(Constants.PARMA_HAM, new ParmaHam(new Weight(150)));
+        ingredients.put(Constants.LIGHT_BALSAMICO, new LightBalsamico(new BigSpoon(6)));
+        ingredients.put(Constants.OLIVE_OIL, new OliveOil(new BigSpoon(6)));
         ingredients.put(Constants.SALT, new Salt());
         ingredients.put(Constants.PEPPER, new Pepper());
     }
@@ -73,13 +75,13 @@ public class SaladRecipe extends Recipe{
                     new Pluck<>(ingredients.get(Constants.MOZZARELLA))
             ),
             new RandomSequence(
-                    //todo: mengen fehlen noch
-                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.BASIL), product),
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.MOZZARELLA),  product),
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.BASIL),  product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.ROMAINELETTUCE), product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.ARUGULA), product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.TOMATO), product),
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.NECTARINE), product),
-                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.PARMA_HAM), product)
+                    new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.PARMA_HAM),product)
             ),
             new RandomSequence(
                     new Add<>(tools.get(Constants.PLATE), ingredients.get(Constants.LIGHT_BALSAMICO), product),

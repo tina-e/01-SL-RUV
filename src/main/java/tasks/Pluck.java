@@ -6,21 +6,14 @@ import ingredient.Ingredient;
 
 public class Pluck<Recipe> extends LeafTask<Recipe> {
 
-    private int amount;
     private Ingredient ingredient;
-
-    public Pluck(Ingredient ingredient, int amount) {
-        this.ingredient = ingredient;
-        this.amount = amount;
-    }
     public Pluck(Ingredient ingredient) {
         this.ingredient = ingredient;
-        this.amount = 10;
     }
 
     @Override
     public Status execute() {
-        System.out.println("plucking " + amount + " grams of " + ingredient.getName());
+        System.out.println("plucking " + ingredient.getName());
         return Status.SUCCEEDED;
     }
 

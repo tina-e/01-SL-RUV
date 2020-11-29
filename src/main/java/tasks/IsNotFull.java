@@ -19,7 +19,7 @@ public class IsNotFull<Recipe> extends LeafTask<Recipe> {
     @Override
     public Status execute() {
         if (jar.getSpace() <= 0) {
-            System.out.println(jar.getName() + " ist voll.");
+            System.out.println(jar.getName() + " is full");
             return Status.FAILED;
         }
         return Status.SUCCEEDED;

@@ -41,6 +41,7 @@ public class Add<Recipe> extends LeafTask<Recipe> {
             System.out.println("added " + quantity.getAmount() + " of " + ingredient.getName() +
                     " to " + product.getName() + " in " + tool.getName());
             product.addAmount(quantity.getAmount());
+            //System.out.println("product has now amount of: "+ product.getAmount());
             return Status.SUCCEEDED;
         }
         System.out.println("added " + ingredient.getName()+
