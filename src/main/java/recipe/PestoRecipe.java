@@ -104,64 +104,48 @@ public class PestoRecipe extends Recipe{
         );
     }
 
-    private UntilSuccess<Recipe> buildTasteTestSequence() {
+    private RandomSequence<Recipe> buildTasteTestSequence() {
         MixingCup mixingCup = (MixingCup) tools.get(Constants.MIXING_CUP);
-        return new UntilSuccess<Recipe>(
-                new Sequence<Recipe>(
-                        new Invert<Recipe>(
-                                new TastesGood(product)
-                        ),
-                        new RandomSequence(
-                                new Add<>(mixingCup, ingredients.get(Constants.SALT), product),
-                                new Add<>(mixingCup, ingredients.get(Constants.LEMON_JUICE), product),
+        return new RandomSequence<Recipe>(
+                new UntilFail<>(
+                        new Sequence<>(
+                                new Invert<>(
+                                        new TastesGood(product, ingredients.get(Constants.SALT))
+                                ),
+                                new Add<>(mixingCup, ingredients.get(Constants.SALT), product)
+                        )
+                ),
+                new UntilFail<>(
+                        new Sequence<>(
+                                new Invert<>(
+                                        new TastesGood(product, ingredients.get(Constants.PEPPER))
+                                ),
                                 new Add<>(mixingCup, ingredients.get(Constants.PEPPER), product)
                         )
-                )
+                ),
+                new Add<>(mixingCup, ingredients.get(Constants.LEMON_JUICE), product)
         );
     }
 
     private UntilFail<Recipe> buildBottleSequence() {
-        //System.out.println(requiredJars);
         int requiredJars = (int) Math.ceil(product.getAmount() / Jar.TOTAL_SPACE);
-        //Sequence sequence = new Sequence();
-
-        //sequence.addChild(new Debug(product));
-
-
-        /*for (int i = 0; i < requiredJars; i++) {
+        Sequence sequence = new Sequence();
+        for (int i = 0; i < requiredJars; i++) {
             tools.put(Constants.JAR + i, new Jar(Constants.JAR + i));
             sequence.addChild(buildJarSequence(i));
         }
-         */
-        tools.put(Constants.JAR, new Jar(Constants.JAR));
-
-
         return new UntilFail(
-                //new Sequence(
-                        //new IsStillAvailable(product),
-
-
-                        new Sequence(
-                                new IsStillAvailable(product),
-                                new UntilFail(
-                                        new Selector(
-                                                new IsStillAvailable(product),
-                                                new IsNotFull((Jar) tools.get(Constants.JAR)),
-                                                new Bottle((Jar) tools.get(Constants.JAR), product)
-                                        )
-                                ),
-                                new PutOn(product, ingredients.get(Constants.OLIVE_OIL + "1"))
-                        )
-                //)
+                new Sequence(
+                        new IsStillAvailable(product),
+                        sequence
+                )
         );
-
     }
 
     private Sequence buildJarSequence(int jarKey) {
         return new Sequence(
-                new IsStillAvailable(product),
                 new UntilFail(
-                        new Sequence(
+                        new Selector(
                                 new IsNotFull((Jar) tools.get(Constants.JAR + jarKey)),
                                 new Bottle((Jar) tools.get(Constants.JAR + jarKey), product)
                         )

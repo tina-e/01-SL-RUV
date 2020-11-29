@@ -79,7 +79,8 @@ public class ZucPestoRecipe extends Recipe {
         addToMixing.addChild(new Add(tools.get(Constants.MIXING_CUP),ingredients.get(Constants.OLIVE_OIL+1) ));
         cookingTask.addChild(addToMixing);
         cookingTask.addChild(new Blend<Recipe>((Blender) tools.get(Constants.BLENDER), tools.get(Constants.MIXING_CUP) , ingredients.get(Constants.GARLICCLOVE),ingredients.get(Constants.ZUCCHINI),ingredients.get(Constants.BASIL),ingredients.get(Constants.PARMESAN),ingredients.get(Constants.ALMONDS),ingredients.get(Constants.PUMPKINSEEDS),ingredients.get(Constants.OLIVE_OIL+1)));
-        cookingTask.addChild(new Selector<>(new TastesGood(product), new Sequence<>(new Season(ingredients.get(Constants.SALT), product), new Season(ingredients.get(Constants.PEPPER), product))));
+        //todo: salz und pfeffer
+        cookingTask.addChild(new Selector<>(new TastesGood(product, ingredients.get(Constants.SALT)), new Sequence<>(new Season(ingredients.get(Constants.SALT), product), new Season(ingredients.get(Constants.PEPPER), product))));
         cookingTask.addChild(new Sequence<Recipe>(new Add<Recipe>(tools.get(Constants.JAR), product), new Arrange(product, "flat"),new Add<Recipe>(tools.get(Constants.JAR), ingredients.get(Constants.OLIVE_OIL+2),new BigSpoon(1), product)));
 
         cookingTask.addChild(new Store(product, "chill and dry"));
